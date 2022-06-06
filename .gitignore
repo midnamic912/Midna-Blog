@@ -2,6 +2,7 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm,flask,venv,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm,flask,venv,macos
+blog.db
 
 .idea/
 ### Flask ###
