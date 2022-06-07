@@ -1,3 +1,5 @@
+import smtplib
+
 from flask import Flask, render_template, redirect, url_for, flash, abort, request
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
@@ -10,7 +12,7 @@ from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
 from dotenv import load_dotenv
-from os import getenv, environ
+from os import getenv
 
 
 load_dotenv()
@@ -206,6 +208,16 @@ def about():
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
+    if request.method == "POST":  # request.method gets the method type of the HTTP request
+        name = request.form["name"]  # request.form gets the form data transmitted by the HTTP request in dict format
+        email = request.form["email"]
+        phone = request.form["phone"]
+        message = request.form["message"]
+        with smtplib.SMTP("smtp.gmail.com") as connection:
+            connection.starttls()
+            connection.login(user=getenv("MY_EMAIL"), password=getenv("MY_PW"))
+            connection.sendmail(from_addr=getenv("MY_EMAIL"), to_addrs="midnamic912@gmail.com",
+                                msg=f"Subject: New Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}")
     return render_template("contact.html", method=request.method, logged_in=current_user.is_authenticated)
 
 
