@@ -16,12 +16,12 @@ from os import getenv, environ
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = getenv("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get("DATABASE_URL", "sqlite:///blog.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = getenv("POSTGRESQL_URL", "sqlite:///blog.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
