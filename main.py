@@ -78,7 +78,7 @@ class Comment(db.Model):
 
 
 # Line below only required once, when creating DB.
-# db.create_all()
+db.create_all()
 
 ##LOGIN STUFF
 login_manager = LoginManager()
