@@ -1,5 +1,5 @@
 # My Persenal Blog
-<h3>A Blog built with Flask, with full functions and for easy maintainance.</h3>
+<h3>A Blog built with Flask, with full functions and for easy maintenance.</h3>
 
 Link: <a href="https://midna-blog.herokuapp.com/">My Blog Served by Heroku</a>
 
