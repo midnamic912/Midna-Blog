@@ -20,7 +20,7 @@ Link: <a href="https://midna-blog.herokuapp.com/">My Blog Served by Heroku</a>
 <li>The blog owner can create/edit posts with easy, clear interface with validation</li>
 <li>The blog owner can edit their contents with HTML-like editor whose functions include applying different fonts, add images and Gifs...etc, making the posts more interesting</li>
 
-# Tools & Technologies:
+# Tools & Techniques:
 <li><b>Flask</b>: for framework and authentication</li>
 <li><b>Bootstrap</b>: for styles and layout</li>
 <li><b>WTForms</b>: for forms and validation</li>
