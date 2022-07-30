@@ -14,31 +14,45 @@ from functools import wraps
 from dotenv import load_dotenv
 from os import getenv
 
-
+# Make sure to find an .env file, parse the file and load all the variables.
 load_dotenv()
 
+# Tell Flask make this file as the controller.
 app = Flask(__name__)
+
+# Fetch the env. var we just loaded from .env file and tell it to this flask app by configuring its attribute
 app.config['SECRET_KEY'] = getenv("SECRET_KEY")
+
+# Apply CKEditor to this app
 ckeditor = CKEditor(app)
+
+# Apply Bootstrap to this app
 Bootstrap(app)
 
 ##CONNECT TO DB
+
+# Tell this app what the DB path is by configuring its attribute
 app.config['SQLALCHEMY_DATABASE_URI'] = getenv("POSTGRESQL_URL", "sqlite:///blog.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Apply SQLAlchemy to this app, then we can manipulate the DB with the db instance
 db = SQLAlchemy(app)
 
 
-##CONFIGURE TABLES
+##CONFIGURE DB TABLES
 
-class User(UserMixin, db.Model):
+# define what fields a User should have (each User is an entry)
+# and specify where it belongs (under the table called 'users')
+class User(UserMixin, db.Model):  # UserMixin made a User instance can be authenticated.
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(250), unique=True, nullable=False)
     password = db.Column(db.String(250), nullable=False)
     name = db.Column(db.String(250), nullable=False)
 
-    # this is not a column but an attribute of the class
-    # indicates that the value of this attribute will be a list of BlogPost objects.
+    # Applying One-to-many data relationship
+
+    # indicates that the value of this 'posts' attribute will be a list of BlogPost objects.
     # the 'back_populates' tells this attribute is related to 'author' attribute in other class.
     # that allows if there is a configuration in 'posts', there will also be one in 'author'
     # and we can tab into them both to get data like User.posts and BlogPost.author
@@ -55,6 +69,7 @@ class BlogPost(db.Model):
     date = db.Column(db.String(250), nullable=False)
     body = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
+
     # line below means this 'author_id' column's value is constrained by the id column of the users table
     # that means a 'author_id' must match one of the 'id' in users table
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -82,11 +97,12 @@ class Comment(db.Model):
 # Line below only required once, when creating DB.
 db.create_all()
 
-##LOGIN STUFF
+## IMPLEMENT LOGIN FEATURE AND ADMIN VALIDATION
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+# callback function when the user_loader gets triggered
 @login_manager.user_loader
 def load_user(user_id):
     print(f"current user: {user_id}")
@@ -117,10 +133,13 @@ gravatar = Gravatar(app,
                     use_ssl=False,
                     base_url=None)
 
+
+# App Routes
 @app.route('/')
 def get_all_posts():
     posts = BlogPost.query.all()
     user_id = current_user.get_id()
+    # param 'logged_in' is for header.html, determines if the Login or Logout button shows or not
     return render_template("index.html", all_posts=posts, logged_in=current_user.is_authenticated, user_id=user_id)
 
 
@@ -214,7 +233,7 @@ def contact():
         phone = request.form["phone"]
         message = request.form["message"]
         with smtplib.SMTP("smtp.gmail.com") as connection:
-            connection.starttls()
+            connection.starttls()  # encrypt all the connection commands
             connection.login(user=getenv("MY_EMAIL"), password=getenv("MY_PW"))
             connection.sendmail(from_addr=getenv("MY_EMAIL"), to_addrs="midnamic912@gmail.com",
                                 msg=f"Subject: New Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}")
@@ -271,5 +290,6 @@ def delete_post(post_id):
     return redirect(url_for('get_all_posts'))
 
 
+# to make sure only when this file is not imported by other file, the app should run
 if __name__ == "__main__":
     app.run(debug=True)
