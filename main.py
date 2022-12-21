@@ -12,9 +12,9 @@ from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
 # from dotenv import load_dotenv
-from os import getenv, environ
+from os import environ
 
-# Make sure to find an .env file, parse the file and load all the variables.
+# Make sure to find an .env file in local, parse the file and load all the variables.
 # load_dotenv()
 
 # Tell Flask make this file as the controller.
