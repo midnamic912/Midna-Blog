@@ -11,17 +11,17 @@ from flask_login import UserMixin, login_user, LoginManager, current_user, logou
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
-from dotenv import load_dotenv
-from os import getenv
+# from dotenv import load_dotenv
+from os import getenv, environ
 
 # Make sure to find an .env file, parse the file and load all the variables.
-load_dotenv()
+# load_dotenv()
 
 # Tell Flask make this file as the controller.
 app = Flask(__name__)
 
 # Fetch the env. var we just loaded from .env file and tell it to this flask app by configuring its attribute
-app.config['SECRET_KEY'] = getenv("SECRET_KEY")
+app.config['SECRET_KEY'] = environ["SECRET_KEY"]
 
 # Apply CKEditor to this app
 ckeditor = CKEditor(app)
@@ -32,7 +32,7 @@ Bootstrap(app)
 ##CONNECT TO DB
 
 # Tell this app what the DB path is by configuring its attribute
-app.config['SQLALCHEMY_DATABASE_URI'] = getenv("POSTGRESQL_URL")
+app.config['SQLALCHEMY_DATABASE_URI'] = environ["POSTGRESQL_URL"]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Apply SQLAlchemy to this app, then we can manipulate the DB with the db instance
@@ -234,8 +234,8 @@ def contact():
         message = request.form["message"]
         with smtplib.SMTP("smtp.gmail.com") as connection:
             connection.starttls()  # encrypt all the connection commands
-            connection.login(user=getenv("MY_EMAIL"), password=getenv("MY_PW"))
-            connection.sendmail(from_addr=getenv("MY_EMAIL"), to_addrs="midnamic912@gmail.com",
+            connection.login(user=environ["MY_EMAIL"], password=environ["MY_PW"])
+            connection.sendmail(from_addr=environ["MY_EMAIL"], to_addrs="midnamic912@gmail.com",
                                 msg=f"Subject: New Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}")
     return render_template("contact.html", method=request.method, logged_in=current_user.is_authenticated)
 
