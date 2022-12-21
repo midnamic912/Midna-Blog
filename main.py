@@ -239,7 +239,7 @@ def contact():
         smtp.login(environ["MY_EMAIL"], environ["MY_PW"])
         from_addr = environ["MY_EMAIL"]
         to_addr = "midnamic912@gmail.com"
-        msg = f"Subject: New Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}"
+        msg = f"Subject: New Message from Blog\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}"
         status = smtp.sendmail(from_addr, to_addr, msg)
         if status == {}:
             print('Message transfer-sending success!')
