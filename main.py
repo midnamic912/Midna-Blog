@@ -232,11 +232,21 @@ def contact():
         email = request.form["email"]
         phone = request.form["phone"]
         message = request.form["message"]
-        with smtplib.SMTP("smtp.gmail.com") as connection:
-            connection.starttls()  # encrypt all the connection commands
-            connection.login(user=environ["MY_EMAIL"], password=environ["MY_PW"])
-            connection.sendmail(from_addr=environ["MY_EMAIL"], to_addrs="midnamic912@gmail.com",
-                                msg=f"Subject: New Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}")
+
+        smtp = smtplib.SMTP('smtp.gmail.com', 587)
+        smtp.ehlo()
+        smtp.starttls() # encrypt all the connection commands
+        smtp.login(environ["MY_EMAIL"], environ["MY_PW"])
+        from_addr = environ["MY_EMAIL"]
+        to_addr = "midnamic912@gmail.com"
+        msg = f"Subject: New Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}"
+        status = smtp.sendmail(from_addr, to_addr, msg)
+        if status == {}:
+            print('Message transfer-sending success!')
+        else:
+            print('Message transfer-sending failed...')
+        smtp.quit()
+
     return render_template("contact.html", method=request.method, logged_in=current_user.is_authenticated)
 
 
