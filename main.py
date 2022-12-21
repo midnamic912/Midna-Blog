@@ -94,7 +94,8 @@ class Comment(db.Model):
     parent_post = relationship("BlogPost", back_populates="comments")
 
 
-# Line below only required once, when creating DB.
+# Create_all() will create the DB with tables defined above,
+# and will not attempt to recreate tables already present in the target database.
 db.create_all()
 
 ## IMPLEMENT LOGIN FEATURE AND ADMIN VALIDATION
