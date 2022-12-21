@@ -32,7 +32,7 @@ Bootstrap(app)
 ##CONNECT TO DB
 
 # Tell this app what the DB path is by configuring its attribute
-app.config['SQLALCHEMY_DATABASE_URI'] = getenv("POSTGRESQL_URL", "sqlite:///blog.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = getenv("POSTGRESQL_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Apply SQLAlchemy to this app, then we can manipulate the DB with the db instance
