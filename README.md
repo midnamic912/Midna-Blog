@@ -29,7 +29,8 @@ Link: <a href="http://flask-env.eba-s5tehe9d.ap-northeast-1.elasticbeanstalk.com
 <li><b>SQLAlchemy</b>: for database manipulation</li>
 <li><b>CKEditor</b>: for blog post editing</li>
 <li><b>RESTful API</b>: for functions of whole website</li>
-<li><b>Heroku</b>: as web host</li>
+<li><b>Heroku</b>: as web host (until 01.11.2022)</li>
+<li><b>AWS Elastic Beanstalk</b>: as web host </li>
 <li><b>gunicorn</b>: WGSI server for python projects and host servers</li>
 <li><b>PostgreSQL</b>: Database implemented by Heroku</li>
 <li><b>One-to-Many Data Model</b>: for relational data managing like posts, author, comments</li>
