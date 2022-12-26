@@ -1,7 +1,7 @@
 # My Persenal Blog
 <h3>A Blog built with Flask, with full functions and for easy maintenance.</h3>
 
-Link: <a href="http://flask-env.eba-s5tehe9d.ap-northeast-1.elasticbeanstalk.com/">My Blog Served by AWS Elastic Beanstalk</a>
+Link: <a href="http://flask-env.eba-s5tehe9d.ap-northeast-1.elasticbeanstalk.com/">My Blog Hosted by AWS Elastic Beanstalk</a>
 
 <img src="https://i.imgur.com/F34v5XQ.png" width="700">
 <img src="https://i.imgur.com/X1WFev5.png" width="700">
