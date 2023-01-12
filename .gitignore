@@ -417,3 +417,5 @@ test.py
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+midna-blog.pem
